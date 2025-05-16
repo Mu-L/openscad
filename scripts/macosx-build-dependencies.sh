@@ -38,7 +38,7 @@ OPTION_X86_64=false
 
 PACKAGES=(
     "double_conversion 3.2.1"
-    "boost 1.86.0"
+    "boost 1.88.0"
     "eigen 3.4.0"
     "gmp 6.3.0"
     "mpfr 4.2.0"
@@ -54,10 +54,10 @@ PACKAGES=(
     "glib2 2.83.0"
     "pixman 0.42.2"
     "cairo 1.18.0"
-    "cgal 6.0"
+    "cgal 6.0.1"
     # Using Qt6 going forward, leaving Qt5 config just in case
     # "qt5 5.15.16"
-    "qt6 6.5.3"
+    "qt6 6.5.5"
     "opencsg 1.7.0"
     "qscintilla 2.14.1"
     "onetbb 2021.12.0"
@@ -254,17 +254,17 @@ build_qt6()
   cd $BASEDIR/src
   v=(${version//./ }) # Split into array
   rm -rf qt-everywhere-src-$version
-  if [ ! -f qt-everywhere-src-$version.tar.xz ]; then
-    curl -LO --insecure https://download.qt.io/official_releases/qt/${v[0]}.${v[1]}/$version/single/qt-everywhere-src-$version.tar.xz
+  if [ ! -f qt-everywhere-opensource-src-$version.tar.xz ]; then
+    curl -LO --insecure https://download.qt.io/official_releases/qt/${v[0]}.${v[1]}/$version/src/single/qt-everywhere-opensource-src-$version.tar.xz
   fi
-  tar xjf qt-everywhere-src-$version.tar.xz
+  tar xjf qt-everywhere-opensource-src-$version.tar.xz
   cd qt-everywhere-src-$version
 
   mkdir build
   cd build
   ../configure -prefix $DEPLOYDIR -release -opensource -confirm-license -nomake tests -nomake examples \
     -submodules qtbase,qt5compat,qtmultimedia,qtsvg -skip qtquick3d,qtquicktimeline,qtdeclarative \
-    -no-feature-sql -no-feature-testlib -no-feature-glib \
+    -no-feature-sql -no-feature-glib \
 		-no-feature-linguist -no-feature-designer -no-feature-pixeltool -no-feature-assistant \
     -no-feature-distancefieldgenerator -no-feature-qtattributionsscanner -no-feature-qtplugininfo \
     -no-feature-qtdiag \

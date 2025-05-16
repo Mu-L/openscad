@@ -198,10 +198,10 @@ elseif(APPLE)
   set(OPENSCAD_BINPATH "${CBD}/OpenSCAD.app/Contents/MacOS/OpenSCAD")
 elseif (WIN32 OR MXECROSS)
   set(OPENSCAD_BINPATH "${CBD}/openscad.com")
-elseif(EXISTS "${CBD}/bin/openscad")
-  set(OPENSCAD_BINPATH "${CBD}/bin/openscad")
+elseif(EXISTS "${CBD}/bin/openscad${SUFFIX_WITH_DASH}")
+  set(OPENSCAD_BINPATH "${CBD}/bin/openscad${SUFFIX_WITH_DASH}")
 else()
-  set(OPENSCAD_BINPATH "${CBD}/openscad")
+  set(OPENSCAD_BINPATH "${CBD}/openscad${SUFFIX_WITH_DASH}")
 endif()
 
 #if(EXISTS "${OPENSCAD_BINPATH}")
@@ -1286,7 +1286,7 @@ add_cmdline_test(offcolorpngtest EXPERIMENTAL SCRIPT ${EXPORT_IMPORT_PNGTEST_PY}
 add_cmdline_test(3mfcolorpngtest EXPERIMENTAL SCRIPT ${EXPORT_IMPORT_PNGTEST_PY} SUFFIX png FILES ${COLOR_3D_TEST_FILES} EXPECTEDDIR render-manifold ARGS ${OPENSCAD_EXE_ARG} --format=3MF --backend=manifold --render)
 
 # PDF Export
-add_cmdline_test(export-pdf SCRIPT ${EXPORT_PNGTEST_PY} SUFFIX png FILES ${SCAD_PDF_FILES} ARGS ${OPENSCAD_EXE_ARG} --format=PDF KERNEL Square:2)
+add_cmdline_test(export-pdf SCRIPT ${EXPORT_PNGTEST_PY} SUFFIX png FILES ${SCAD_PDF_FILES} ARGS ${OPENSCAD_EXE_ARG} --format=PDF -O export-pdf/show-scale=false KERNEL Square:2)
 
 # Expected failing tests
 add_failing_test(stlfailedtest         SUFFIX stl  FILES ${TEST_SCAD_DIR}/misc/empty-union.scad ARGS --retval=1)
@@ -1755,3 +1755,4 @@ foreach(CONF ${TEST_CONFIGS})
   list(SORT ${CONF}_TEST_CONFIG)
   message(DEBUG "${CONF}: ${${CONF}_TEST_CONFIG}")
 endforeach()
+
